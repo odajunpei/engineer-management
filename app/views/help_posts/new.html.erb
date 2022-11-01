@@ -1,0 +1,12 @@
+<h1>記事投稿フォーム</h1>
+<%= form_with model: @help_post, local:true do |f| %>
+  <h4>画像</h4>
+  <%= f.attachment_field :image %>
+  <h4>タイトル</h4>
+  <%= f.text_field :title %>
+  <h4>参考ページURL</h4>
+  <%= f.text_area :url %>
+  <h4>説明</h4>
+  <%= f.text_area :description %>
+  <%= f.submit '投稿' %>
+<% end %>

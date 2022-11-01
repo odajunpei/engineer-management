@@ -1,0 +1,11 @@
+<div>
+  <%= attachment_image_tag @help_post, :image %>
+  <p>ショップ名：<%= @help_post.title %></p>
+  <p>参考ページ: <%= @help_post.url %></p>
+  <p>説明：<%= @help_post.description %></p>
+  <p>ユーザーネーム：<%= @help_post.user.name %></p>
+  <p>投稿日時：<%= @help_post.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @help_post.user == current_user %>
+    <%= link_to "削除", help_post_path(@help_post), method: :delete %>
+  <% end %>
+</div>
