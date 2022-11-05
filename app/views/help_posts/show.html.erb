@@ -9,3 +9,36 @@
     <%= link_to "削除", help_post_path(@help_post), method: :delete %>
   <% end %>
 </div>
+
+<div>
+<p>コメント件数：<%= @help_post.help_comments.count %></p>
+<% @help_post.help_comments.each do |help_comment| %>
+  <%= attachment_image_tag post_comment.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+  <%= help_comment.user.name %>
+  <%= help_comment.created_at.strftime('%Y/%m/%d') %><%= help_comment.comment %>
+  <% if help_comment.user == current_user %>
+  <div>
+    <%= link_to "削除", help_post_help_comment_path(help_comment.help_post, help_comment), method: :delete %>
+  </div>
+  <% end %>
+<% end %>
+</div>
+<div>
+<%= form_with(model:[@help_post, @help_comment], local: true) do |f| %>
+  <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに" %>
+  <%= f.submit "送信する" %>
+<% end %>
+<% if @help_post.favorited_by?(current_user) %>
+    <p>
+      <%= link_to help_post_help_favorite_path(@help_post), method: :delete do %>
+        ♥<%= @help_post.help_favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to help_post_help_favorites_path(@help_post), method: :post do %>
+        ♡<%= @help_post.help_favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
+</div>

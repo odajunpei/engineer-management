@@ -6,9 +6,12 @@ class HelpPostsController < ApplicationController
 
   def create
     @help_post = HelpPost.new(help_post_params)
-    @help_post.user_id = current_user.id 
-    @help_post.save
-    redirect_to help_posts_path
+    @help_post.user_id = current_user.id
+    if @help_post.save
+      redirect_to help_posts_path
+    else
+      render :new
+    end
   end
 
   def index
@@ -17,6 +20,7 @@ class HelpPostsController < ApplicationController
 
   def show
     @help_post = HelpPost.find(params[:id])
+    @help_comment = HelpComment.new
   end
 
   def destroy
